@@ -1,12 +1,13 @@
 import { OrbitControls } from '@react-three/drei'
 import Board from './Board.jsx'
 import { Canvas } from '@react-three/fiber'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 function Game() {
 	const [board, setBoard] = useState(Array(9).fill(null))
 	const [isNextX, setIsNextX] = useState(true)
 	const [winner, setWinner] = useState(null)
+	const score = useRef({'X':0, 'Y':0})
 
 	function stepNext(index) {
 		let newCells = board.slice()
@@ -35,6 +36,12 @@ function Game() {
 				newCells[b] === newCells[c]
 			) {
 				setWinner(true)
+				if (newCells[a] == 1){
+					score.current = {"X":score.current.X+1, "Y":score.current.Y};
+				}
+				else{
+					score.current = {"X":score.current.X, "Y":score.current.Y+1};
+				}
 				return combination
 			}
 		}
@@ -44,7 +51,7 @@ function Game() {
 	return [
 		<div className='GameInfo'>
 			<div className='CurrentPlayer'>
-				{`Сейчас ходит ${isNextX ? 'X' : '0'}`}
+				{(board.findIndex((el) => el == null) != -1 && winner == null) && `Сейчас ходит ${isNextX ? 'X' : '0'}`}
 			</div>
 			<div className='Winner'>
 				{winner != null && `Победил ${isNextX ? '0' : 'X'}`}
@@ -59,8 +66,9 @@ function Game() {
 			>
 				Restart
 			</button>
+			<div className='Score'>{`Счёт ${score.current.X}:${score.current.Y}`}</div>
 		</div>,
-		<Canvas camera={{ fov: 90, position: [0, 1, 1] }}>
+		<Canvas className="Canvas" camera={{ fov: 90, position: [0, 1.3, 1.3] }}>
 			<OrbitControls enableZoom={false} enablePan={false}></OrbitControls>
 			<directionalLight position={[10, 10, 10]} intensity={1} />
 			<directionalLight position={[-10, 10, -10]} intensity={1} />
