@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Cross from './Cross'
 import Circle from './Circle'
 
-function Cell({ index, value, stepNext, winner }) {
+function Cell({ index, value, stepNext, winner, isNextX }) {
 	let x = 0
 	let z = 0
 	let win = false
@@ -60,9 +60,6 @@ function Cell({ index, value, stepNext, winner }) {
 		setOpacity(0)
 		if (value == null && winner == null) {
 			stepNext(index)
-			if (winner != null){
-
-			}
 		}
 	}
 	const [opacity, setOpacity] = useState(0)

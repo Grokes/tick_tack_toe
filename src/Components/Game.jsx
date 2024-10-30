@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import React, { useState, useRef } from 'react'
 
 function Game() {
+	let gameMode = 2
 	const [board, setBoard] = useState(Array(9).fill(null))
 	const [isNextX, setIsNextX] = useState(true)
 	const [winner, setWinner] = useState(null)
@@ -11,12 +12,23 @@ function Game() {
 
 	function stepNext(index) {
 		let newCells = board.slice()
-		isNextX ? (newCells[index] = 1) : (newCells[index] = 2)
-		setIsNextX(!isNextX)
-		setBoard(newCells)
-		setWinner(CheckWinner(newCells))
+		if (gameMode == 1) {
+			isNextX ? (newCells[index] = 1) : (newCells[index] = 2)
+			setIsNextX(!isNextX)
+			setBoard(newCells)
+			setWinner(CheckWinner(newCells))
+		} else if (gameMode == 2) {
+			newCells[index] = 1
+			if (!(newCells.findIndex(el => el == null) == -1 || winner != null)) {
+				do {
+					index = Math.floor(Math.random() * 9)
+				} while (newCells[index] != null)
+				newCells[index] = 2
+			}
+			setBoard(newCells)
+			setWinner(CheckWinner(newCells))
+		} 
 	}
-
 	function CheckWinner(newCells) {
 		const winnerCombination = [
 			[0, 1, 2],
