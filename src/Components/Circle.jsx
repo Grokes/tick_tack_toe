@@ -2,7 +2,7 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 function Circle({x, z, win}) {
-	const { nodes, materials } = useGLTF('/public/tic_tac_toe_borad/Cross.gltf')
+	const { nodes, materials } = useGLTF('/tic_tac_toe_borad/Cross.gltf')
 	let color = 'black'
 	if (win == true) {
 		color = 'red'

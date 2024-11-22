@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei'
 import Cell from './Cell'
 
 function Board({board, isNextX, winner, stepNext}) {
-	const { nodes, materials } = useGLTF('/public/tic_tac_toe_borad/Cross.gltf')
+	const { nodes, materials } = useGLTF('/tic_tac_toe_borad/Cross.gltf')
 	return (
 		<>
 			<group>
